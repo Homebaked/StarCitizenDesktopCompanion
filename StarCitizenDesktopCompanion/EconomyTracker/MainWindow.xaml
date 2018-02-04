@@ -7,6 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Border">
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--Locations-->
+        <Border Grid.RowSpan="2">
+            <Grid>
+                
+            </Grid>
+        </Border>
         
+        <!--Resources-->
+        <Border Grid.Column="1">
+            <Grid>
+                
+            </Grid>
+        </Border>
+        
+        <!--Info-->
+        <Border Grid.Column="1" Grid.Row="1">
+            <Grid>
+                
+            </Grid>
+        </Border>
     </Grid>
 </Window>
