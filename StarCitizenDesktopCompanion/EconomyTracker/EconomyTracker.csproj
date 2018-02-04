@@ -71,7 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Interfaces\ILocation.cs" />
-    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\TradingPort.cs" />
     <Compile Include="Models\Commodity.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
