@@ -10,6 +10,5 @@ namespace EconomyTracker.Models.Interfaces
     {
         Guid Guid { get; }
         string Name { get; }
-        List<TradingPort> Children { get; }
     }
 }

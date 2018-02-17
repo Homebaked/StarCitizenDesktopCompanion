@@ -10,5 +10,11 @@ namespace EconomyTracker.Models
     {
         public Guid Guid { get; }
         public string Name { get; }
+
+        public Commodity(string name, Guid guid = new Guid())
+        {
+            this.Name = name;
+            this.Guid = guid;
+        }
     }
 }

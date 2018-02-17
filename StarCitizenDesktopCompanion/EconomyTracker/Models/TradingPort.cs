@@ -12,9 +12,13 @@ namespace EconomyTracker.Models
     {
         public Guid Guid { get; }
         public string Name { get; }
-        public List<TradingPort> Children
+        public List<PricePair> Goods { get; }
+
+        public TradingPort(string name, Guid guid = new Guid())
         {
-            get { return new List<TradingPort>(); }
+            this.Name = name;
+            this.Guid = guid;
+            this.Goods = new List<PricePair>();
         }
     }
 }
