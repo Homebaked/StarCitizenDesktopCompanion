@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EconomyTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid>
         <Grid.Resources>
             <Style TargetType="Border">
@@ -16,30 +17,64 @@
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!--Locations-->
-        <Border Grid.RowSpan="2">
+        <Border>
             <Grid>
-                
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <DataGrid ItemsSource="{Binding TradingPorts}"
+                          SelectedItem="{Binding SelectedPort}"
+                          AutoGenerateColumns="False"
+                          Grid.ColumnSpan="2">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Commodities" Binding="{Binding Goods.Count}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBox Text="{Binding NewPortName, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Row="1"
+                         Margin="5"/>
+
+                <Button Content="Add Trading Port"
+                        Command="{Binding AddPortCommand}"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="5"/>
             </Grid>
+
         </Border>
-        
-        <!--Resources-->
+
+        <!--Info-->
         <Border Grid.Column="1">
             <Grid>
-                
-            </Grid>
-        </Border>
-        
-        <!--Info-->
-        <Border Grid.Column="1" Grid.Row="1">
-            <Grid>
-                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedPort.Name}" Margin="5"/>
+
+                <DataGrid ItemsSource="{Binding SelectedPort.Goods}"
+                          AutoGenerateColumns="False"
+                          Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Commodity" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Buy Price" Binding="{Binding BuyPrice}"/>
+                        <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Border>
     </Grid>
