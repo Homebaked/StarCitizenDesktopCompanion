@@ -24,6 +24,8 @@ namespace EconomyTracker.ViewModel
         private TradingPort _selectedPort = null;
         private string _newPortName = "";
         private Commodity _newCommodity = null;
+        private double _newBuyPrice = 0;
+        private double _newSellPrice = 0;
         private string _newCommodityName = "";
 
         public TradingPort SelectedPort
@@ -62,6 +64,30 @@ namespace EconomyTracker.ViewModel
                 }
             }
         }
+        public double NewBuyPrice
+        {
+            get { return _newBuyPrice; }
+            set
+            {
+                if (_newBuyPrice != value)
+                {
+                    _newBuyPrice = value;
+                    RaisePropertyChanged("NewBuyPrice");
+                }
+            }
+        }
+        public double NewSellPrice
+        {
+            get { return _newSellPrice; }
+            set
+            {
+                if (_newSellPrice != value)
+                {
+                    _newSellPrice = value;
+                    RaisePropertyChanged("NewSellPrice");
+                }
+            }
+        }
         public string NewCommodityName
         {
             get { return _newCommodityName; }
@@ -87,17 +113,34 @@ namespace EconomyTracker.ViewModel
             this.Commodities = new ObservableCollection<Commodity>();
             this.TradingPorts = new ObservableCollection<TradingPort>();
             this.AddPortCommand = new RelayCommand(addPortExecute, canAddPort);
+            this.AddPricePairCommand = new RelayCommand(addPricePairExecute, canAddPricePair);
             this.AddCommodityCommand = new RelayCommand(addCommodityExecute, canAddCommodity);
         }
 
         private void addPortExecute()
         {
-            TradingPorts.Add(new TradingPort(this.NewPortName));
+            this.TradingPorts.Add(new TradingPort(this.NewPortName));
             this.NewPortName = "";
         }
         private bool canAddPort()
         {
             return this.NewPortName != "";
+        }
+
+        private void addPricePairExecute()
+        {
+            PricePair newPP = new PricePair(NewCommodity);
+            newPP.BuyPrice = NewBuyPrice;
+            newPP.SellPrice = NewSellPrice;
+            this.SelectedPort.Goods.Add(newPP);
+            this.NewCommodity = null;
+            this.NewBuyPrice = 0;
+            this.NewSellPrice = 0;
+            RaisePropertyChanged("SelectedPort");
+        }
+        private bool canAddPricePair()
+        {
+            return this.SelectedPort != null && this.NewCommodity != null;
         }
 
         private void addCommodityExecute()
