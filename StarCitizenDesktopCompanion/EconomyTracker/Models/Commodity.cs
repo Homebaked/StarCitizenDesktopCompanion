@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace EconomyTracker.Models
 {
-    public class Commodity
+    public class Commodity : BaseModel
     {
-        public Guid Guid { get; }
         public string Name { get; }
 
-        public Commodity(string name, Guid guid = new Guid())
+        public Commodity(string name, Guid guid = new Guid()) : base(guid)
         {
             this.Name = name;
-            this.Guid = guid;
         }
     }
 }

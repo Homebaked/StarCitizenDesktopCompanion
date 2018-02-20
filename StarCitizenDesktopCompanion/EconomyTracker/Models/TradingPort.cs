@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace EconomyTracker.Models
 {
-    public class TradingPort : ILocation
+    public class TradingPort : BaseModel, ILocation
     {
-        public Guid Guid { get; }
         public string Name { get; }
-        public List<PricePair> Goods { get; }
+        public ObservableCollection<PricePair> Goods { get; }
 
-        public TradingPort(string name, Guid guid = new Guid())
+        public TradingPort(string name, Guid guid = new Guid()) : base(guid)
         {
             this.Name = name;
-            this.Guid = guid;
-            this.Goods = new List<PricePair>();
+            this.Goods = new ObservableCollection<PricePair>();
         }
     }
 }

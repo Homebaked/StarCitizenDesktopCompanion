@@ -137,6 +137,7 @@ namespace EconomyTracker.ViewModel
             this.NewBuyPrice = 0;
             this.NewSellPrice = 0;
             RaisePropertyChanged("SelectedPort");
+            RaisePropertyChanged("TradingPorts");
         }
         private bool canAddPricePair()
         {
