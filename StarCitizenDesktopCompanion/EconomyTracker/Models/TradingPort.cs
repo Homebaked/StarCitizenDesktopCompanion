@@ -10,7 +10,20 @@ namespace EconomyTracker.Models
 {
     public class TradingPort : BaseModel, ILocation
     {
-        public string Name { get; }
+        private string _name;
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    RaisePropertyChanged("Name");
+                }
+            }
+        }
         public ObservableCollection<PricePair> Goods { get; }
 
         public TradingPort(string name, Guid guid = new Guid()) : base(guid)

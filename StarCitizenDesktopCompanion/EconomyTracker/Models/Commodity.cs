@@ -8,7 +8,19 @@ namespace EconomyTracker.Models
 {
     public class Commodity : BaseModel
     {
-        public string Name { get; }
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    RaisePropertyChanged("Name");
+                }
+            }
+        }
 
         public Commodity(string name, Guid guid = new Guid()) : base(guid)
         {

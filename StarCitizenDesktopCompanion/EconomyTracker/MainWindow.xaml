@@ -40,11 +40,11 @@
                 <DataGrid ItemsSource="{Binding TradingPorts}"
                           SelectedItem="{Binding SelectedPort}"
                           AutoGenerateColumns="False"
-                          Grid.ColumnSpan="2"
-                          IsReadOnly="True">
+                          Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Commodities" Binding="{Binding Goods.Count}"/>
+                        <DataGridTextColumn Header="Commodities" Binding="{Binding Goods.Count}"
+                                            IsReadOnly="True"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -78,10 +78,10 @@
 
                 <DataGrid ItemsSource="{Binding SelectedPort.Goods}"
                           AutoGenerateColumns="False"
-                          Grid.Row="1"
-                          IsReadOnly="True">
+                          Grid.Row="1">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}"/>
+                        <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}"
+                                            IsReadOnly="True"/>
                         <DataGridTextColumn Header="Buy Price" Binding="{Binding BuyPrice}"/>
                         <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice}"/>
                     </DataGrid.Columns>
@@ -154,8 +154,7 @@
 
                 <DataGrid ItemsSource="{Binding Commodities}"
                           AutoGenerateColumns="False"
-                          Grid.ColumnSpan="2"
-                          IsReadOnly="True">
+                          Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                     </DataGrid.Columns>

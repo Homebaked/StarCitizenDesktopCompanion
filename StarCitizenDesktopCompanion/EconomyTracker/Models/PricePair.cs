@@ -9,10 +9,22 @@ namespace EconomyTracker.Models
 {
     public class PricePair : BaseModel
     {
+        private Commodity _commodity;
         private double _buyPrice = 0;
         private double _sellPrice = 0;
         
-        public Commodity Commodity { get; }
+        public Commodity Commodity
+        {
+            get { return _commodity; }
+            set
+            {
+                if (_commodity != value)
+                {
+                    _commodity = value;
+                    RaisePropertyChanged("Commodity");
+                }
+            }
+        }
         public double BuyPrice
         {
             get { return _buyPrice; }
