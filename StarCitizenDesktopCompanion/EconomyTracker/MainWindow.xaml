@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EconomyTracker"
+        xmlns:views="clr-namespace:EconomyTracker.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -15,162 +16,134 @@
                 <Setter Property="Margin" Value="5"/>
             </Style>
         </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <!--Locations-->
-        <TextBlock Text="Locations"
-                   HorizontalAlignment="Center"/>
-        <Border Grid.Row="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <DataGrid ItemsSource="{Binding TradingPorts}"
-                          SelectedItem="{Binding SelectedPort}"
-                          AutoGenerateColumns="False"
-                          Grid.ColumnSpan="2">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Commodities" Binding="{Binding Goods.Count}"
-                                            IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <TextBox Text="{Binding NewPortName, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Row="1"
-                         Margin="5"/>
-
-                <Button Content="Add Location"
-                        Command="{Binding AddPortCommand}"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"/>
-            </Grid>
-
-        </Border>
-
-        <!--Info-->
-        <TextBlock Text="Selected Location"
-                   HorizontalAlignment="Center"
-                   Grid.Column="1"/>
-        <Border Grid.Row="1" Grid.Column="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions/>
-
-                <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedPort.Name}" Margin="5"/>
-
-                <DataGrid ItemsSource="{Binding SelectedPort.Goods}"
-                          AutoGenerateColumns="False"
-                          Grid.Row="1">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}"
-                                            IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Buy Price" Binding="{Binding BuyPrice}"/>
-                        <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <Grid Grid.Row="2">
+        <TabControl>
+            <TabItem>
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <!--Locations-->
+                    <views:LocationsView/>
 
-                    <TextBlock Text="Commodity:"
-                               HorizontalAlignment="Right"
-                               Margin="5"/>
-                    <ComboBox ItemsSource="{Binding Commodities}"
-                              SelectedItem="{Binding NewCommodity}"
-                              DisplayMemberPath="Name"
-                              Grid.Column="1"
-                              Margin="5"/>
+                    <!--Info-->
+                    <TextBlock Text="Selected Location"
+                       HorizontalAlignment="Center"
+                       Grid.Column="1"/>
+                    <Border Grid.Row="1" Grid.Column="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions/>
 
-                    <TextBlock Text="Buy Price:"
-                               HorizontalAlignment="Right"
-                               Margin="5"
-                               Grid.Row="1"/>
-                    <TextBox Text="{Binding NewBuyPrice, StringFormat={}{0:C}}"
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedPort.Name}" Margin="5"/>
+
+                            <DataGrid ItemsSource="{Binding SelectedPort.Goods}"
+                              AutoGenerateColumns="False"
+                              Grid.Row="1">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}"
+                                                IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Buy Price" Binding="{Binding BuyPrice}"/>
+                                    <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Commodity:"
+                                   HorizontalAlignment="Right"
+                                   Margin="5"/>
+                                <ComboBox ItemsSource="{Binding Commodities}"
+                                  SelectedItem="{Binding NewCommodity}"
+                                  DisplayMemberPath="Name"
+                                  Grid.Column="1"
+                                  Margin="5"/>
+
+                                <TextBlock Text="Buy Price:"
+                                   HorizontalAlignment="Right"
+                                   Margin="5"
+                                   Grid.Row="1"/>
+                                <TextBox Text="{Binding NewBuyPrice, StringFormat={}{0:C}}"
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 Margin="5"/>
+
+                                <TextBlock Text="Sell Price:"
+                                   HorizontalAlignment="Right"
+                                   Margin="5"
+                                   Grid.Row="2"/>
+                                <TextBox Text="{Binding NewSellPrice, StringFormat={}{0:C}}"
+                                 Grid.Row="2"
+                                 Grid.Column="1"
+                                 Margin="5"/>
+
+                                <Button Content="Add Prices"
+                                Grid.Row="3"
+                                Grid.ColumnSpan="2"
+                                Margin="5"
+                                Width="100"
+                                Command="{Binding AddPricePairCommand}"/>
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+
+                    <!--Commodities-->
+                    <TextBlock Grid.Column="2"
+                       Text="Commodities"
+                       HorizontalAlignment="Center"/>
+                    <Border Grid.Row="1" Grid.Column="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <DataGrid ItemsSource="{Binding Commodities}"
+                              AutoGenerateColumns="False"
+                              Grid.ColumnSpan="2">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <TextBox Text="{Binding NewCommodityName, UpdateSourceTrigger=PropertyChanged}"
                              Grid.Row="1"
-                             Grid.Column="1"
                              Margin="5"/>
 
-                    <TextBlock Text="Sell Price:"
-                               HorizontalAlignment="Right"
-                               Margin="5"
-                               Grid.Row="2"/>
-                    <TextBox Text="{Binding NewSellPrice, StringFormat={}{0:C}}"
-                             Grid.Row="2"
-                             Grid.Column="1"
-                             Margin="5"/>
-
-                    <Button Content="Add Prices"
-                            Grid.Row="3"
-                            Grid.ColumnSpan="2"
+                            <Button Content="Add Commodity"
+                            Grid.Row="1"
+                            Grid.Column="1"
                             Margin="5"
-                            Width="100"
-                            Command="{Binding AddPricePairCommand}"/>
+                            Command="{Binding AddCommodityCommand}"/>
+
+                        </Grid>
+                    </Border>
                 </Grid>
-                
-            </Grid>
-        </Border>
-        
-        <!--Commodities-->
-        <TextBlock Grid.Column="2"
-                   Text="Commodities"
-                   HorizontalAlignment="Center"/>
-        <Border Grid.Row="1" Grid.Column="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <DataGrid ItemsSource="{Binding Commodities}"
-                          AutoGenerateColumns="False"
-                          Grid.ColumnSpan="2">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <TextBox Text="{Binding NewCommodityName, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Row="1"
-                         Margin="5"/>
-
-                <Button Content="Add Commodity"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Command="{Binding AddCommodityCommand}"/>
-
-            </Grid>
-        </Border>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
