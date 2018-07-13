@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarCitizenModelLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
@@ -27,7 +28,21 @@ namespace StarCitizenDatabaseInterfacer
             builder.DataSource = path;
             builder.Version = SQLITE_VERSION;
             this.connection = new SQLiteConnection(builder.ConnectionString);
+        }
 
+        public void SaveNew(SCDataManager dataManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveDelta(SCDeltaManager deltaManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SCDataManager Load()
+        {
+            throw new NotImplementedException();
         }
     }
 }
