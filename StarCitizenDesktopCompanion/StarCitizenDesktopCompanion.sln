@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomyTracker", "EconomyTracker\EconomyTracker.csproj", "{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarCitizenDataServer", "StarCitizenDataServer\StarCitizenDataServer.csproj", "{457A8268-188A-48C5-9816-DC3FF26F7354}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{457A8268-188A-48C5-9816-DC3FF26F7354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{457A8268-188A-48C5-9816-DC3FF26F7354}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{457A8268-188A-48C5-9816-DC3FF26F7354}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{457A8268-188A-48C5-9816-DC3FF26F7354}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
