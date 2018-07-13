@@ -1,13 +1,13 @@
-﻿using StarCitizenModelLibrary.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StarCitizenModelLibrary.Models
 {
-    public class TradingPort : BaseModel, ILocation
+    public class TradingPort : BaseModel
     {
         private string _name;
 
@@ -23,12 +23,14 @@ namespace StarCitizenModelLibrary.Models
                 }
             }
         }
-        public ObservableCollection<PricePair> Goods { get; }
+        public ObservableCollection<CommodityPrice> SellPrices { get; }
+        public ObservableCollection<CommodityPrice> BuyPrices { get; }
 
         public TradingPort(string name, Guid guid = new Guid()) : base(guid)
         {
             this.Name = name;
-            this.Goods = new ObservableCollection<PricePair>();
+            this.SellPrices = new ObservableCollection<CommodityPrice>();
+            this.BuyPrices = new ObservableCollection<CommodityPrice>();
         }
     }
 }

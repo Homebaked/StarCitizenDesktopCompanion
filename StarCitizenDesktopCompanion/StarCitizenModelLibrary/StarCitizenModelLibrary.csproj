@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ILocation.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Commodity.cs" />
+    <Compile Include="Models\CommodityPrice.cs" />
     <Compile Include="Models\SCDataManager.cs" />
     <Compile Include="Models\TradingPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
