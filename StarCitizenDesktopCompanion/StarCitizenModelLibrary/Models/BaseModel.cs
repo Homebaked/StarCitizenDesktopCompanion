@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EconomyTracker.Models
+namespace StarCitizenModelLibrary.Models
 {
     public abstract class BaseModel : INotifyPropertyChanged
     {

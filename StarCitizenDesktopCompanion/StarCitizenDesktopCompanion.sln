@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomyTracker", "EconomyTracker\EconomyTracker.csproj", "{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarCitizenDatabaseInterfacer", "StarCitizenDatabaseInterfacer\StarCitizenDatabaseInterfacer.csproj", "{49AF7472-3CCE-411E-95DF-BCE3F6D76FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarCitizenModelLibrary", "StarCitizenModelLibrary\StarCitizenModelLibrary.csproj", "{600571A7-F113-4F68-88E3-F3B91F831608}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A1D0728-F98C-4D9A-92A2-9EA3554A8089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49AF7472-3CCE-411E-95DF-BCE3F6D76FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49AF7472-3CCE-411E-95DF-BCE3F6D76FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49AF7472-3CCE-411E-95DF-BCE3F6D76FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49AF7472-3CCE-411E-95DF-BCE3F6D76FCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{600571A7-F113-4F68-88E3-F3B91F831608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600571A7-F113-4F68-88E3-F3B91F831608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600571A7-F113-4F68-88E3-F3B91F831608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600571A7-F113-4F68-88E3-F3B91F831608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
