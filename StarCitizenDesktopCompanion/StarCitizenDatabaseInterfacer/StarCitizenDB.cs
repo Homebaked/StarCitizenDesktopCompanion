@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarCitizenModelLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,33 +7,34 @@ using System.Threading.Tasks;
 
 namespace StarCitizenDatabaseInterfacer
 {
-    class StarCitizenDB
+    public static class StarCitizenDB
     {
-
-
-        public void SaveNew(SCDataManager dataManager)
+        public static void SaveNew(string path, SCDataManager dataManager)
         {
-            nonQueryCommand("BEGIN TRANSACTION");
-            createDatabaseTables();
-            throw new NotImplementedException();
-            nonQueryCommand("END TRANSACTION");
+            using (SQLiteDB db = new SQLiteDB(path))
+            {
+                createDatabaseTables(db);
+                throw new NotImplementedException();
+            }
         }
 
-        public void SaveDelta(SCDeltaManager deltaManager)
+        public static void SaveDelta(string path, SCDeltaManager deltaManager)
         {
-            nonQueryCommand("BEGIN TRANSACTION");
-            throw new NotImplementedException();
-            nonQueryCommand("END TRANSACTION");
+            using (SQLiteDB db = new SQLiteDB(path))
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        public SCDataManager Load()
+        public static SCDataManager Load(string path)
         {
-            nonQueryCommand("BEGIN TRANSACTION");
-            throw new NotImplementedException();
-            nonQueryCommand("END TRANSACTION");
+            using (SQLiteDB db = new SQLiteDB(path))
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        private void createDatabaseTables()
+        private static void createDatabaseTables(SQLiteDB db)
         {
 
         }

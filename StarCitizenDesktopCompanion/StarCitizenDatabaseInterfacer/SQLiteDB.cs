@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace StarCitizenDatabaseInterfacer
 {
-    public class SQLiteDB
+    public class SQLiteDB : IDisposable
     {
         const int SQLITE_VERSION = 3;
 
         private SQLiteConnection connection;
 
-        public StarCitizenSQLiteDB(string path)
+        public SQLiteDB(string path)
         {
             if (path == "" || path == null) throw new NullReferenceException("StarCitizenSQLiteDB needs non null path.");
 
@@ -29,10 +29,13 @@ namespace StarCitizenDatabaseInterfacer
             builder.Version = SQLITE_VERSION;
             this.connection = new SQLiteConnection(builder.ConnectionString);
             this.connection.Open();
+
+            this.nonQueryCommand("BEGIN TRANSACTION");
         }
-        ~StarCitizenSQLiteDB()
-             
+        
+        public void Dispose()
         {
+            this.nonQueryCommand("END TRANSACTION");
             try
             {
                 this.connection.Close();
@@ -41,15 +44,6 @@ namespace StarCitizenDatabaseInterfacer
             {
                 Console.WriteLine("Connection already closed at time of deconstruction.");
             }
-        }
-
-        public void BeginTransaction()
-        {
-            this.nonQueryCommand("BEGIN TRANSACTION");
-        }
-        public void EndTransaction()
-        {
-            this.nonQueryCommand("END TRANSACTION");
         }
         
         public bool CreateTable()
