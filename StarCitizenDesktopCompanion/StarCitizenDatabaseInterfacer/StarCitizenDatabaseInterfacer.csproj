@@ -58,7 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StarCitizenSQLiteDB.cs" />
+    <Compile Include="StarCitizenDB.cs" />
+    <Compile Include="SQLiteDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

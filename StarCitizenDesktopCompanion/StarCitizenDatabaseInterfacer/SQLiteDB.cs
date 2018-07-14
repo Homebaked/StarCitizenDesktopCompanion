@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StarCitizenDatabaseInterfacer
 {
-    public class StarCitizenSQLiteDB
+    public class SQLiteDB
     {
         const int SQLITE_VERSION = 3;
 
@@ -28,21 +28,44 @@ namespace StarCitizenDatabaseInterfacer
             builder.DataSource = path;
             builder.Version = SQLITE_VERSION;
             this.connection = new SQLiteConnection(builder.ConnectionString);
+            this.connection.Open();
+        }
+        ~StarCitizenSQLiteDB()
+             
+        {
+            try
+            {
+                this.connection.Close();
+            }
+            catch
+            {
+                Console.WriteLine("Connection already closed at time of deconstruction.");
+            }
         }
 
-        public void SaveNew(SCDataManager dataManager)
+        public void BeginTransaction()
+        {
+            this.nonQueryCommand("BEGIN TRANSACTION");
+        }
+        public void EndTransaction()
+        {
+            this.nonQueryCommand("END TRANSACTION");
+        }
+        
+        public bool CreateTable()
         {
             throw new NotImplementedException();
         }
 
-        public void SaveDelta(SCDeltaManager deltaManager)
+        public bool AddRow(string tableName, Dictionary<string, string> data)
         {
             throw new NotImplementedException();
         }
 
-        public SCDataManager Load()
+        private void nonQueryCommand(string commandText)
         {
-            throw new NotImplementedException();
+            SQLiteCommand command = new SQLiteCommand(commandText, this.connection);
+            command.ExecuteNonQuery();
         }
     }
 }
