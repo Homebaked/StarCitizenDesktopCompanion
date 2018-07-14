@@ -46,9 +46,36 @@ namespace StarCitizenDatabaseInterfacer
             }
         }
         
-        public bool CreateTable()
+        public void CreateTable(DBTable table)
         {
-            throw new NotImplementedException();
+            string commandString = string.Format("CREATE TABLE '{0}' (", table.Name);
+
+            string pkString = ", PRIMARY KEY(";
+            bool pkExists = false;
+            bool firstPK = true;
+            foreach (DBField field in table.Fields)
+            {
+                commandString += string.Format("'{0}' {1}", field.Name, field.Type);
+                if (table.Fields.IndexOf(field) < (table.Fields.Count - 1)) commandString += ", ";
+
+                if (field.PrimaryKey)
+                {
+                    pkExists = true;
+                    if (!firstPK) pkString += ", ";
+                    pkString += string.Format("'{0}'", field.Name);
+                    firstPK = false;
+                }
+            }
+
+            if (pkExists)
+            {
+                pkString += ")";
+                commandString += pkString;
+            }
+
+            commandString += ")";
+
+            nonQueryCommand(commandString);
         }
 
         public bool AddRow(string tableName, Dictionary<string, string> data)
@@ -56,10 +83,20 @@ namespace StarCitizenDatabaseInterfacer
             throw new NotImplementedException();
         }
 
-        private void nonQueryCommand(string commandText)
+        public bool EditRow()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public bool RemoveRow()
+        {
+            throw new NotImplementedException();
+        }
+
+        private int nonQueryCommand(string commandText)
         {
             SQLiteCommand command = new SQLiteCommand(commandText, this.connection);
-            command.ExecuteNonQuery();
+            return command.ExecuteNonQuery();
         }
     }
 }
