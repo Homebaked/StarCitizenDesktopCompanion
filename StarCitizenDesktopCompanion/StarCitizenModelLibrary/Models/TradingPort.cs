@@ -23,14 +23,12 @@ namespace StarCitizenModelLibrary.Models
                 }
             }
         }
-        public ObservableCollection<CommodityPrice> SellPrices { get; }
-        public ObservableCollection<CommodityPrice> BuyPrices { get; }
+        public ObservableCollection<CommodityPrice> Prices { get; }
 
         public TradingPort(string name, Guid guid = new Guid()) : base(guid)
         {
             this.Name = name;
-            this.SellPrices = new ObservableCollection<CommodityPrice>();
-            this.BuyPrices = new ObservableCollection<CommodityPrice>();
+            this.Prices = new ObservableCollection<CommodityPrice>();
         }
     }
 }

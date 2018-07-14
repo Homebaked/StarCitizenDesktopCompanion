@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 
 namespace StarCitizenModelLibrary.Models
 {
-    public class CommodityPrice
+    public class CommodityPrice : BaseModel
     {
+        public enum PriceType { Buy = 1, Sell }
+
         public Commodity Commodity { get; }
+        public PriceType Type { get; }
 
         public ObservableCollection<PricePoint> PriceHistory { get; }
 
-        public CommodityPrice(Commodity commodity)
+        public CommodityPrice(Commodity commodity, PriceType type, Guid guid = new Guid()) : base(guid)
         {
             this.Commodity = commodity;
+            this.Type = type;
             this.PriceHistory = new ObservableCollection<PricePoint>();
         }
 
