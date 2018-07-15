@@ -24,8 +24,8 @@ namespace StarCitizenModelLibrary.Models
         private void subscribeToDataManager(SCDataManager dataManager)
         {
             dataManager.PropertyChanged += propertyChanged;
-            dataManager.Commodities.CollectionChanged += collectionChanged;
-            dataManager.TradingPorts.CollectionChanged += collectionChanged;
+            dataManager.Commodities.RelationshipChanged += relationshipChanged;
+            dataManager.TradingPorts.RelationshipChanged += relationshipChanged;
 
             foreach(Commodity commodity in dataManager.Commodities)
             {
@@ -37,6 +37,7 @@ namespace StarCitizenModelLibrary.Models
                 subscribeToTradingPort(tradingPort);
             }
         }
+        
         private void subscribeToCommodity(Commodity commodity)
         {
             commodity.PropertyChanged += propertyChanged;
@@ -44,7 +45,7 @@ namespace StarCitizenModelLibrary.Models
         private void subscribeToTradingPort(TradingPort tradingPort)
         {
             tradingPort.PropertyChanged += propertyChanged;
-            tradingPort.Prices.CollectionChanged += collectionChanged;
+            tradingPort.Prices.RelationshipChanged += relationshipChanged;
             
             foreach(CommodityPrice price in tradingPort.Prices)
             {
@@ -53,7 +54,7 @@ namespace StarCitizenModelLibrary.Models
         }
         private void subscribeToCommodityPrice(CommodityPrice price)
         {
-            price.PriceHistory.CollectionChanged += collectionChanged;
+            price.PriceHistory.RelationshipChanged += relationshipChanged;
         }
         #endregion
 
@@ -62,13 +63,15 @@ namespace StarCitizenModelLibrary.Models
         {
             this.Deltas.Add(new DataDelta(sender, args));
         }
-        private void collectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        private void relationshipChanged(RelationshipChangedArgs args)
         {
-            this.Deltas.Add(new DataDelta(sender, args));
-            
-            if (args.Action == NotifyCollectionChangedAction.Add)
+            NotifyCollectionChangedEventArgs notifyArgs = args.Args;
+
+            this.Deltas.Add(new DataDelta(args));
+
+            if (notifyArgs.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach(object item in args.NewItems)
+                foreach (object item in notifyArgs.NewItems)
                 {
                     if (item is Commodity commodity)
                     {
@@ -92,17 +95,17 @@ namespace StarCitizenModelLibrary.Models
     {
         public object Sender { get; }
         public PropertyChangedEventArgs PropertyChangedArgs { get; } = null;
-        public NotifyCollectionChangedEventArgs CollectionChangedArgs { get; } = null;
+
+        public RelationshipChangedArgs RelationshipChangedArgs { get; } = null;
 
         public DataDelta(object sender, PropertyChangedEventArgs propertyChangedArgs)
         {
             this.Sender = sender;
             this.PropertyChangedArgs = propertyChangedArgs;
         }
-        public DataDelta(object sender, NotifyCollectionChangedEventArgs collectionChangedArgs)
+        public DataDelta(RelationshipChangedArgs relationshipChangedArgs)
         {
-            this.Sender = sender;
-            this.CollectionChangedArgs = collectionChangedArgs;
+            this.RelationshipChangedArgs = relationshipChangedArgs;
         }
     }
 }

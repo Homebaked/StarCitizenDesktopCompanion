@@ -43,6 +43,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Commodity.cs" />
     <Compile Include="Models\CommodityPrice.cs" />
+    <Compile Include="Models\RelationshipCollection.cs" />
     <Compile Include="Models\SCDataManager.cs" />
     <Compile Include="Models\SCDeltaManager.cs" />
     <Compile Include="Models\TradingPort.cs" />

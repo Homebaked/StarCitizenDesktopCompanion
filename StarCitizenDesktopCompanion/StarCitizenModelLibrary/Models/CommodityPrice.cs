@@ -14,13 +14,13 @@ namespace StarCitizenModelLibrary.Models
         public Commodity Commodity { get; }
         public PriceType Type { get; }
 
-        public ObservableCollection<PricePoint> PriceHistory { get; }
+        public RelationshipCollection<PricePoint> PriceHistory { get; }
 
         public CommodityPrice(Commodity commodity, PriceType type, Guid guid = new Guid()) : base(guid)
         {
             this.Commodity = commodity;
             this.Type = type;
-            this.PriceHistory = new ObservableCollection<PricePoint>();
+            this.PriceHistory = new RelationshipCollection<PricePoint>(this);
         }
 
         public void AddPrice(double price)

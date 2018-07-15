@@ -153,6 +153,17 @@ namespace StarCitizenDatabaseInterfacer
             }
         }
 
+        public bool EditProperty(string prop, string id, string value)
+        {
+            Dictionary<string, string> propData = new Dictionary<string, string>();
+            Dictionary<string, string> condData = new Dictionary<string, string>();
+
+            propData.Add(prop, value);
+            condData.Add(prop, id);
+
+            return this.EditValueInTable(prop, propData, condData);
+        }
+
         public DataTable GetDataFromTable(string tableName)
         {
             string commandString = string.Format("SELECT * FROM {0}", tableName);
