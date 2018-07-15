@@ -1,6 +1,7 @@
 ﻿using StarCitizenModelLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -62,43 +63,108 @@ namespace StarCitizenDatabaseInterfacer
                 }
             }
 
-            commandString += convertToCSV(fields);
+            commandString += separateValues(fields);
 
             if (primaryKeys.Count > 0)
             {
-                commandString += string.Format(", PRIMARY KEY({0})", convertToCSV(primaryKeys));
+                commandString += string.Format(", PRIMARY KEY({0})", separateValues(primaryKeys));
             }
 
-            commandString += ")";
+            commandString += ");";
 
             nonQueryCommand(commandString);
         }
 
-        public bool AddValueToTable(string tableName, Dictionary<string, string> data)
+        public bool AddValueToTable(string tableName, Dictionary<string, string> dataFields)
         {
             string commandString = string.Format("INSERT INTO {0} (", tableName);
 
             List<string> fields = new List<string>();
             List<string> values = new List<string>();
-            foreach(KeyValuePair<string, string> fieldValue in data)
+            foreach(KeyValuePair<string, string> fieldValue in dataFields)
             {
                 fields.Add(fieldValue.Key);
                 values.Add(string.Format("'{0}'", fieldValue.Value));
             }
 
-            commandString += string.Format("{0}) values ({1})", convertToCSV(fields), convertToCSV(values));
+            commandString += string.Format("{0}) VALUES ({1});", separateValues(fields), separateValues(values));
+            
+            if (nonQueryCommand(commandString) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("AddValueToTable() failed. Command string:");
+                Console.WriteLine(commandString);
+                return false;
+            }
+        }
+        public bool EditValueInTable(string tableName, Dictionary<string, string> dataFields, Dictionary<string, string> conditionFields)
+        {
+            string commandString = string.Format("UPDATE {0} SET ", tableName);
 
-            return (nonQueryCommand(commandString) > 0);
+            List<string> fieldsToUpdate = new List<string>();
+            foreach(KeyValuePair<string, string> fieldValue in dataFields)
+            {
+                fieldsToUpdate.Add(string.Format("{0} = '{1}'", fieldValue.Key, fieldValue.Value));
+            }
+
+            List<string> conditionsToCheck = new List<string>();
+            foreach(KeyValuePair<string, string> conditionField in conditionFields)
+            {
+                conditionsToCheck.Add(string.Format("{0} = '{1}'", conditionField.Key, conditionField.Value));
+            }
+
+            commandString += string.Format("{0} WHERE {1}", separateValues(fieldsToUpdate), separateValues(conditionsToCheck, " AND "));
+
+            if (nonQueryCommand(commandString) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("EditValueInTable() failed. Command string:");
+                Console.WriteLine(commandString);
+                return false;
+            }
+        }
+        public bool RemoveValueFromTable(string tableName, Dictionary<string, string> conditionFields)
+        {
+            string commandString = string.Format("DELETE FROM {0} WHERE (", tableName);
+
+            List<string> conditionsToCheck = new List<string>();
+            foreach(KeyValuePair<string, string> conditionField in conditionFields)
+            {
+                conditionsToCheck.Add(string.Format("{0} = '{1}'", conditionField.Key, conditionField.Value));
+            }
+
+            commandString += string.Format("{0})", separateValues(conditionsToCheck, " AND "));
+
+            if (nonQueryCommand(commandString) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("RemoveValueFromTable() failed. Command string:");
+                Console.WriteLine(commandString);
+                return false;
+            }
         }
 
-        public bool EditValueInTable()
+        public DataTable GetDataFromTable(string tableName)
         {
-            throw new NotImplementedException();
-        }
-        
-        public bool RemoveValueFromTable()
-        {
-            throw new NotImplementedException();
+            string commandString = string.Format("SELECT * FROM {0}", tableName);
+            DataTable data = loadDataCommand(commandString);
+            
+            if (data == null)
+            {
+                Console.WriteLine("GetDataFromTable() failed. Command string:");
+                Console.WriteLine(commandString);
+            }
+
+            return data;
         }
 
         private int nonQueryCommand(string commandText)
@@ -106,13 +172,32 @@ namespace StarCitizenDatabaseInterfacer
             SQLiteCommand command = new SQLiteCommand(commandText, this.connection);
             return command.ExecuteNonQuery();
         }
-        private static string convertToCSV(List<string> values)
+        private DataTable loadDataCommand(string commandText)
+        {
+            DataTable data = new DataTable();
+            SQLiteCommand command = new SQLiteCommand(commandText, this.connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            try
+            {
+                data.Load(reader);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("loadDataCommand() failed. Exception:");
+                Console.WriteLine(e.Message);
+                return null;
+            }
+            reader.Close();
+            return data;
+        }
+
+        private static string separateValues(List<string> values, string separator = ", ")
         {
             string result = "";
             foreach (string value in values)
             {
                 result += value;
-                if (values.IndexOf(value) < (values.Count - 1)) result += ", ";
+                if (values.IndexOf(value) < (values.Count - 1)) result += separator;
             }
             return result;
         }
