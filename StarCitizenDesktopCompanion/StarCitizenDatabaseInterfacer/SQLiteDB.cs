@@ -50,27 +50,23 @@ namespace StarCitizenDatabaseInterfacer
         {
             string commandString = string.Format("CREATE TABLE '{0}' (", table.Name);
 
-            string pkString = ", PRIMARY KEY(";
-            bool pkExists = false;
-            bool firstPK = true;
+            List<string> fields = new List<string>();
+            List<string> primaryKeys = new List<string>();
             foreach (DBField field in table.Fields)
             {
-                commandString += string.Format("'{0}' {1}", field.Name, field.Type);
-                if (table.Fields.IndexOf(field) < (table.Fields.Count - 1)) commandString += ", ";
+                fields.Add(string.Format("'{0}' {1}", field.Name, field.Type));
 
                 if (field.PrimaryKey)
                 {
-                    pkExists = true;
-                    if (!firstPK) pkString += ", ";
-                    pkString += string.Format("'{0}'", field.Name);
-                    firstPK = false;
+                    primaryKeys.Add(string.Format("'{0}'", field.Name));
                 }
             }
 
-            if (pkExists)
+            commandString += convertToCSV(fields);
+
+            if (primaryKeys.Count > 0)
             {
-                pkString += ")";
-                commandString += pkString;
+                commandString += string.Format(", PRIMARY KEY({0})", convertToCSV(primaryKeys));
             }
 
             commandString += ")";
@@ -78,17 +74,29 @@ namespace StarCitizenDatabaseInterfacer
             nonQueryCommand(commandString);
         }
 
-        public bool AddRow(string tableName, Dictionary<string, string> data)
+        public bool AddValueToTable(string tableName, Dictionary<string, string> data)
         {
-            throw new NotImplementedException();
+            string commandString = string.Format("INSERT INTO {0} (", tableName);
+
+            List<string> fields = new List<string>();
+            List<string> values = new List<string>();
+            foreach(KeyValuePair<string, string> fieldValue in data)
+            {
+                fields.Add(fieldValue.Key);
+                values.Add(string.Format("'{0}'", fieldValue.Value));
+            }
+
+            commandString += string.Format("{0}) values ({1})", convertToCSV(fields), convertToCSV(values));
+
+            return (nonQueryCommand(commandString) > 0);
         }
 
-        public bool EditRow()
+        public bool EditValueInTable()
         {
             throw new NotImplementedException();
         }
         
-        public bool RemoveRow()
+        public bool RemoveValueFromTable()
         {
             throw new NotImplementedException();
         }
@@ -97,6 +105,16 @@ namespace StarCitizenDatabaseInterfacer
         {
             SQLiteCommand command = new SQLiteCommand(commandText, this.connection);
             return command.ExecuteNonQuery();
+        }
+        private static string convertToCSV(List<string> values)
+        {
+            string result = "";
+            foreach (string value in values)
+            {
+                result += value;
+                if (values.IndexOf(value) < (values.Count - 1)) result += ", ";
+            }
+            return result;
         }
     }
 }
