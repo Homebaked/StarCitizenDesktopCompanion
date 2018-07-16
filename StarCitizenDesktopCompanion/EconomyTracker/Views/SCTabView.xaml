@@ -10,14 +10,16 @@
     <Grid DataContext="{Binding ElementName=scTabView}">
         <TabControl>
             <TabItem Header="Commodities">
-                <DataGrid ItemsSource="{Binding DataManager.Commodities}">
+                <DataGrid ItemsSource="{Binding DataManager.Commodities}"
+                          AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Commodity" Binding="{Binding Name}" IsReadOnly="True"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
             <TabItem Header="TradingPorts">
-                <DataGrid ItemsSource="{Binding DataManager.TradingPorts}">
+                <DataGrid ItemsSource="{Binding DataManager.TradingPorts}"
+                          AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Trading Ports" Binding="{Binding Name}" IsReadOnly="True"/>
                     </DataGrid.Columns>

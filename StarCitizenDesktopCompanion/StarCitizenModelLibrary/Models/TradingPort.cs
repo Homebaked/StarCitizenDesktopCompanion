@@ -25,7 +25,8 @@ namespace StarCitizenModelLibrary.Models
         }
         public RelationshipCollection<CommodityPrice> Prices { get; }
 
-        public TradingPort(string name, Guid guid = new Guid()) : base(guid)
+        public TradingPort(string name) : this(name, Guid.NewGuid()) { }
+        public TradingPort(string name, Guid guid) : base(guid)
         {
             this.Name = name;
             this.Prices = new RelationshipCollection<CommodityPrice>(this);

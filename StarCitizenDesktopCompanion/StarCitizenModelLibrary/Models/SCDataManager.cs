@@ -12,7 +12,7 @@ namespace StarCitizenModelLibrary.Models
         public RelationshipCollection<Commodity> Commodities { get; }
         public RelationshipCollection<TradingPort> TradingPorts { get; }
 
-        public SCDataManager(Guid guid = new Guid()) : base(guid)
+        public SCDataManager() : base(Guid.NewGuid())
         {
             this.Commodities = new RelationshipCollection<Commodity>(this);
             this.TradingPorts = new RelationshipCollection<TradingPort>(this);

@@ -11,7 +11,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,7 +28,20 @@
             </Style>
         </Grid.Resources>
 
-        <Border Grid.ColumnSpan="3">
+        <!--Menu-->
+        <Menu Grid.ColumnSpan="3">
+            <MenuItem Header="File">
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Save As"/>
+                <MenuItem Header="Load"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Report Bug"/>
+            </MenuItem>
+        </Menu>
+        
+        <!--Utilities-->
+        <Border Grid.Row="1" Grid.ColumnSpan="3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -37,18 +52,46 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Add Commodity:" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Width="125" Margin="5"/>
-                <Button Grid.Column="2" Margin="5" Content="Add" Width="50"/>
+                <TextBlock Text="Add Commodity:" 
+                           VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1"
+                         Width="125" 
+                         Margin="5" 
+                         Text="{Binding NewCommodityName}"/>
+                <Button Grid.Column="2" 
+                        Margin="5" 
+                        Content="Add" 
+                        Width="50" 
+                        Command="{Binding AddCommodityCommand}"
+                        CommandParameter="{Binding NewCommodityName}"/>
 
-                <TextBlock Grid.Column="3" Text="Add Trading Port:" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="4" Width="125" Margin="5"/>
-                <Button Grid.Column="5" Margin="5" Content="Add" Width="50"/>
+                <TextBlock Grid.Column="3" 
+                           Text="Add Trading Port:"
+                           VerticalAlignment="Center"/>
+                <TextBox Grid.Column="4" 
+                         Width="125" 
+                         Margin="5" Text="{Binding NewTradingPortName}"/>
+                <Button Grid.Column="5" 
+                        Margin="5" 
+                        Content="Add" Width="50" 
+                        Command="{Binding AddTradingPortCommand}"
+                        CommandParameter="{Binding NewTradingPortName}"/>
             </Grid>
         </Border>
 
-        <views:SCTabView Grid.Row="1"/>
-        <views:SCTabView Grid.Row="1" Grid.Column="1"/>
-        <views:SCTabView Grid.Row="1" Grid.Column="2"/>
+        <!--View Screens-->
+        <views:SCTabView Grid.Row="2" 
+                         DataManager="{Binding DataManager}"/>
+        <views:SCTabView Grid.Row="2" 
+                         DataManager="{Binding DataManager}" 
+                         Grid.Column="1"/>
+        <views:SCTabView Grid.Row="2" 
+                         DataManager="{Binding DataManager}" 
+                         Grid.Column="2"/>
+        
+        <!--Status Bar-->
+        <Grid Grid.Row="3" Grid.ColumnSpan="3">
+            <TextBlock Text="Version #"/>
+        </Grid>
     </Grid>
 </Window>

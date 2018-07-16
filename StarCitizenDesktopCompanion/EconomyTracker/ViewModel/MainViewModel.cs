@@ -21,11 +21,45 @@ namespace EconomyTracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        public SCDataManager DataManager = new SCDataManager();
+        private TradingPort _selectedTradingPort;
+
+        public SCDataManager DataManager { get; } = new SCDataManager();
+        public SCDeltaManager DeltaManager { get; }
+
+        public string NewCommodityName { get; set; } = "";
+        public string NewTradingPortName { get; set; } = "";
+
+        public RelayCommand<string> AddCommodityCommand { get; }
+        public RelayCommand<string> AddTradingPortCommand { get; }
+
+        public TradingPort SelectedTradingPort
+        {
+            get { return _selectedTradingPort; }
+            set
+            {
+                if (_selectedTradingPort != value)
+                {
+                    _selectedTradingPort = value;
+                    RaisePropertyChanged("SelectedTradingPort");
+                }
+            }
+        }
 
         public MainViewModel()
         {
+            this.DeltaManager = new SCDeltaManager(this.DataManager);
 
+            this.AddCommodityCommand = new RelayCommand<string>(addCommodityExecute);
+            this.AddTradingPortCommand = new RelayCommand<string>(addTradingPortExecute);
+        }
+
+        private void addCommodityExecute(string name)
+        {
+            this.DataManager.Commodities.Add(new Commodity(name));
+        }
+        private void addTradingPortExecute(string name)
+        {
+            this.DataManager.TradingPorts.Add(new TradingPort(name));
         }
     }
 }

@@ -22,7 +22,8 @@ namespace StarCitizenModelLibrary.Models
             }
         }
 
-        public Commodity(string name, Guid guid = new Guid()) : base(guid)
+        public Commodity(string name) : this(name, Guid.NewGuid()) { }
+        public Commodity(string name, Guid guid) : base(guid)
         {
             this.Name = name;
         }

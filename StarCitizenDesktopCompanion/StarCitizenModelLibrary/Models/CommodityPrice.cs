@@ -14,7 +14,8 @@ namespace StarCitizenModelLibrary.Models
 
         public RelationshipCollection<PricePoint> PriceHistory { get; }
 
-        public CommodityPrice(Commodity commodity, PriceType type, Guid guid = new Guid()) : base(guid)
+        public CommodityPrice(Commodity commodity, PriceType type) : this(commodity, type, Guid.NewGuid()) { }
+        public CommodityPrice(Commodity commodity, PriceType type, Guid guid) : base(guid)
         {
             this.Commodity = commodity;
             this.Type = type;
