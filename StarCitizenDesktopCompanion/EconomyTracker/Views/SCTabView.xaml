@@ -18,12 +18,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="TradingPorts">
-                <DataGrid ItemsSource="{Binding DataManager.TradingPorts}"
-                          AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Trading Ports" Binding="{Binding Name}" IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <local:TradingPortsView VM="{Binding PortsVM}"/>
             </TabItem>
         </TabControl>     
     </Grid>

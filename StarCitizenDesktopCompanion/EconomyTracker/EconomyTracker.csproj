@@ -90,9 +90,13 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\LocationsVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\TradingPortsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\SCTabView.xaml.cs">
       <DependentUpon>SCTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TradingPortsView.xaml.cs">
+      <DependentUpon>TradingPortsView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\SCTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TradingPortsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -28,8 +28,6 @@ namespace EconomyTracker.ViewModel
 
         private SCDataManager _dataManager = new SCDataManager();
 
-        private TradingPort _selectedTradingPort;
-
         private string _newCommodityName = "";
         private string _newTradingPortName = "";
 
@@ -46,6 +44,8 @@ namespace EconomyTracker.ViewModel
             }
         }
         public SCDeltaManager DeltaManager { get; }
+
+        public TradingPortsViewModel PortsVM { get; }
 
         public string NewCommodityName
         {
@@ -78,22 +78,11 @@ namespace EconomyTracker.ViewModel
         public RelayCommand<string> AddCommodityCommand { get; }
         public RelayCommand<string> AddTradingPortCommand { get; }
 
-        public TradingPort SelectedTradingPort
-        {
-            get { return _selectedTradingPort; }
-            set
-            {
-                if (_selectedTradingPort != value)
-                {
-                    _selectedTradingPort = value;
-                    RaisePropertyChanged("SelectedTradingPort");
-                }
-            }
-        }
-
         public MainViewModel()
         {
             this.DeltaManager = new SCDeltaManager(this.DataManager);
+
+            this.PortsVM = new TradingPortsViewModel(this.DataManager);
 
             this.SaveAsCommand = new RelayCommand(saveAsExecute);
             this.LoadCommand = new RelayCommand(loadExecute);
