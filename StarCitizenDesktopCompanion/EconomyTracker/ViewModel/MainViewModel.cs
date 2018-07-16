@@ -5,6 +5,7 @@ using StarCitizenModelLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Input;
 
 namespace EconomyTracker.ViewModel
@@ -103,6 +104,10 @@ namespace EconomyTracker.ViewModel
 
         private void saveAsExecute()
         {
+            if (File.Exists(this.filePath))
+            {
+                File.Delete(this.filePath);
+            }
             StarCitizenDB.SaveNew(this.filePath, this.DataManager);
         }
         private void loadExecute()

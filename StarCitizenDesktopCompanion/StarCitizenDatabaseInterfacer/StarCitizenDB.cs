@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,13 @@ namespace StarCitizenDatabaseInterfacer
 {
     public static class StarCitizenDB
     {
-        public static void SaveNew(string path, SCDataManager dataManager)
+        public static bool SaveNew(string path, SCDataManager dataManager)
         {
+            if (File.Exists(path))
+            {
+                Console.WriteLine("File exists at SaveNew() path. Path: {0}", path);
+                return false;
+            }
             using (SQLiteDB db = new SQLiteDB(path))
             {
                 createDatabaseTables(db);
@@ -36,6 +42,7 @@ namespace StarCitizenDatabaseInterfacer
                     }
                 }
             }
+            return true;
         }
 
         public static void SaveDelta(string path, SCDeltaManager deltaManager)
