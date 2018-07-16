@@ -22,7 +22,7 @@ namespace StarCitizenModelLibrary.Models
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnCollectionChanged(e);
-            RelationshipChanged.Invoke(new RelationshipChangedArgs(this.Parent, e));
+            RelationshipChanged?.Invoke(new RelationshipChangedArgs(this.Parent, e));
         }
     }
 
