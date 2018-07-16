@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -150,7 +151,74 @@ namespace StarCitizenDatabaseInterfacer
         {
             using (SQLiteDB db = new SQLiteDB(path))
             {
-                throw new NotImplementedException();
+                SCDataManager dataManager = new SCDataManager();
+
+                //Commodity
+                DataTable commodityTable = db.GetDataFromTable("Commodity");
+                foreach(DataRow row in commodityTable.Rows)
+                {
+                    Guid guid = new Guid(row.ItemArray[0].ToString());
+                    string name = row.ItemArray[1].ToString();
+
+                    Commodity commodity = new Commodity(name, guid);
+                    dataManager.Commodities.Add(commodity);
+                }
+                Dictionary<Guid, Commodity> commodityDict = createGuidDictionary(dataManager.Commodities);
+
+                //TradingPort
+                DataTable tradingPortTable = db.GetDataFromTable("TradingPort");
+                foreach (DataRow row in tradingPortTable.Rows)
+                {
+                    Guid guid = new Guid(row.ItemArray[0].ToString());
+                    string name = row.ItemArray[1].ToString();
+
+                    TradingPort port = new TradingPort(name, guid);
+                    dataManager.TradingPorts.Add(port);
+                }
+                Dictionary<Guid, TradingPort> portDict = createGuidDictionary(dataManager.TradingPorts);
+
+                //TradingPortComodityPrice
+                DataTable portPriceTable = db.GetDataFromTable("TradingPortCommodityPrice");
+                Dictionary<Guid, TradingPort> priceToPort = new Dictionary<Guid, TradingPort>();
+                foreach (DataRow row in portPriceTable.Rows)
+                {
+                    Guid portGuid = new Guid(row.ItemArray[0].ToString());
+                    Guid priceGuid = new Guid(row.ItemArray[1].ToString());
+                    priceToPort.Add(priceGuid, portDict[portGuid]);
+                }
+
+                //CommodityPrice
+                DataTable priceTable = db.GetDataFromTable("CommodityPrice");
+                List<CommodityPrice> allPrices = new List<CommodityPrice>();
+                foreach(DataRow row in priceTable.Rows)
+                {
+                    Guid guid = new Guid(row.ItemArray[0].ToString());
+                    Guid commodityGuid = new Guid(row.ItemArray[1].ToString());
+                    Commodity commodity = commodityDict[commodityGuid];
+                    PriceType type = PriceTypeUtils.ConvertString(row.ItemArray[2].ToString());
+
+                    CommodityPrice price = new CommodityPrice(commodity, type, guid);
+
+                    TradingPort port = priceToPort[price.Guid];
+                    port.Prices.Add(price);
+
+                    allPrices.Add(price);
+                }
+                Dictionary<Guid, CommodityPrice> priceDict = createGuidDictionary(allPrices);
+
+                //PricePoint
+                DataTable pointTable = db.GetDataFromTable("PricePoint");
+                foreach(DataRow row in pointTable.Rows)
+                {
+                    Guid commodityPriceGuid = new Guid(row.ItemArray[0].ToString());
+                    double priceDouble = (double)row.ItemArray[1];
+                    DateTime dateTime = new DateTime((long)row.ItemArray[2]);
+
+                    CommodityPrice commodityPrice = priceDict[commodityPriceGuid];
+                    commodityPrice.AddPrice(priceDouble, dateTime);
+                }
+
+                return dataManager;
             }
         }
 
@@ -189,7 +257,7 @@ namespace StarCitizenDatabaseInterfacer
             Dictionary<string, string> pointFieldValues = new Dictionary<string, string>();
             pointFieldValues.Add("CommodityPriceGuid", price.Guid.ToString());
             pointFieldValues.Add("Price", point.Price.ToString());
-            pointFieldValues.Add("DateTime", point.DateTime.ToString());
+            pointFieldValues.Add("DateTime", point.DateTime.Ticks.ToString());
         }
 
         private static void addTradingPortCommodityPrice(SQLiteDB db, TradingPort port, CommodityPrice price)
@@ -235,6 +303,16 @@ namespace StarCitizenDatabaseInterfacer
             portPriceGuids.Add("TradingPortGuid", port.Guid.ToString());
             portPriceGuids.Add("CommodityPriceGuid", price.Guid.ToString());
             db.RemoveValueFromTable("TradingPortCommodityPriceTable", portPriceGuids);
+        }
+
+        private static Dictionary<Guid, T> createGuidDictionary<T>(IEnumerable<T> collection) where T : BaseModel
+        {
+            Dictionary<Guid, T> dictionary = new Dictionary<Guid, T>();
+            foreach(T item in collection)
+            {
+                dictionary.Add(item.Guid, item);
+            }
+            return dictionary;
         }
     }
 

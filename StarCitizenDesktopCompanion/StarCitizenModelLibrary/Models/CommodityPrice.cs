@@ -9,8 +9,6 @@ namespace StarCitizenModelLibrary.Models
 {
     public class CommodityPrice : BaseModel
     {
-        public enum PriceType { Buy = 1, Sell }
-
         public Commodity Commodity { get; }
         public PriceType Type { get; }
 
@@ -44,4 +42,38 @@ namespace StarCitizenModelLibrary.Models
             this.DateTime = dateTime;
         }
     }
+
+    public enum PriceType { Buy = 1, Sell }
+
+    public static class PriceTypeUtils
+    {
+        public static string ToString(this PriceType type)
+        {
+            if (type == PriceType.Buy)
+            {
+                return "Buy";
+            }
+            else if (type == PriceType.Sell)
+            {
+                return "Sell";
+            }
+            Console.WriteLine("Unrecognized PriceType");
+            return "";
+        }
+
+        public static PriceType ConvertString(string type)
+        {
+            switch (type)
+            {
+                case "Buy":
+                    return PriceType.Buy;
+                case "Sell":
+                    return PriceType.Sell;
+                default:
+                    return 0;
+            }
+        }
+    }
+
+    
 }
