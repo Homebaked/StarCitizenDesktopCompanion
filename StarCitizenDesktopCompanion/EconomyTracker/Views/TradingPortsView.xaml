@@ -21,8 +21,21 @@
             </DataGrid.Columns>
         </DataGrid>
         <!--Trading Port Info-->
-        <Grid Grid.Column="1">
-            
-        </Grid>
+        <Border Margin="5"
+                Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding SelectedPort.Name}"
+                           FontSize="20"
+                           FontStyle="Oblique"
+                           HorizontalAlignment="Center"/>
+            </Grid>
+        </Border>
+        
     </Grid>
 </UserControl>

@@ -28,6 +28,8 @@ namespace EconomyTracker.ViewModel
 
         private SCDataManager _dataManager = new SCDataManager();
 
+        private TradingPortsViewModel _portsVM;
+
         private string _newCommodityName = "";
         private string _newTradingPortName = "";
 
@@ -45,7 +47,18 @@ namespace EconomyTracker.ViewModel
         }
         public SCDeltaManager DeltaManager { get; }
 
-        public TradingPortsViewModel PortsVM { get; }
+        public TradingPortsViewModel PortsVM
+        {
+            get { return _portsVM; }
+            private set
+            {
+                if (_portsVM != value)
+                {
+                    _portsVM = value;
+                    RaisePropertyChanged("PortsVM");
+                }
+            }
+        }
 
         public string NewCommodityName
         {
@@ -102,6 +115,7 @@ namespace EconomyTracker.ViewModel
         private void loadExecute()
         {
             this.DataManager = StarCitizenDB.Load(filePath);
+            this.PortsVM = new TradingPortsViewModel(this.DataManager);
         }
 
         private void addCommodityExecute(string name)
