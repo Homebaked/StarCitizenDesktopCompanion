@@ -42,14 +42,14 @@ namespace EconomyTracker.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SCMainViewModel>();
         }
 
-        public MainViewModel Main
+        public SCMainViewModel Main
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<SCMainViewModel>();
             }
         }
         

@@ -83,14 +83,14 @@
         </Border>
 
         <!--View Screens-->
-        <views:SCTabView Grid.Row="2" 
-                         DataManager="{Binding DataManager}"/>
-        <views:SCTabView Grid.Row="2" 
-                         DataManager="{Binding DataManager}" 
-                         Grid.Column="1"/>
-        <views:SCTabView Grid.Row="2" 
-                         DataManager="{Binding DataManager}" 
-                         Grid.Column="2"/>
+        <views:SCScreenView Grid.Row="2" 
+                            MainViewModel="{Binding}"/>
+        <views:SCScreenView Grid.Row="2"
+                            MainViewModel="{Binding}"
+                            Grid.Column="1"/>
+        <views:SCScreenView Grid.Row="2" 
+                            MainViewModel="{Binding}"
+                            Grid.Column="2"/>
         
         <!--Status Bar-->
         <Grid Grid.Row="3" Grid.ColumnSpan="3">

@@ -1,5 +1,5 @@
-﻿<UserControl x:Class="EconomyTracker.Views.SCTabView"
-             x:Name="scTabView"
+﻿<UserControl x:Class="EconomyTracker.Views.SCScreenView"
+             x:Name="scScreenView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:EconomyTracker.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
-    <Grid DataContext="{Binding ElementName=scTabView}">
+    <Grid DataContext="{Binding ElementName=scScreenView, Path=MainViewModel}">
         <TabControl>
             <TabItem Header="Commodities">
                 <DataGrid ItemsSource="{Binding DataManager.Commodities}"

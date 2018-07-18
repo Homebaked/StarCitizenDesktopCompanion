@@ -22,7 +22,7 @@ namespace EconomyTracker.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class SCMainViewModel : ViewModelBase
     {
         private string filePath = string.Format("{0}//companionFile.scdb", Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
 
@@ -78,7 +78,7 @@ namespace EconomyTracker.ViewModel
         public RelayCommand<string> AddCommodityCommand { get; }
         public RelayCommand<string> AddTradingPortCommand { get; }
 
-        public MainViewModel()
+        public SCMainViewModel()
         {
             this.DeltaManager = new SCDeltaManager(this.DataManager);
 

@@ -88,12 +88,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\LocationsVM.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SCMainViewModel.cs" />
     <Compile Include="ViewModel\TradingPortsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\SCTabView.xaml.cs">
-      <DependentUpon>SCTabView.xaml</DependentUpon>
+    <Compile Include="Views\SCScreenView.xaml.cs">
+      <DependentUpon>SCScreenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TradingPortsView.xaml.cs">
       <DependentUpon>TradingPortsView.xaml</DependentUpon>
@@ -110,7 +109,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\SCTabView.xaml">
+    <Page Include="Views\SCScreenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,9 +155,7 @@
       <Name>StarCitizenModelLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
