@@ -26,14 +26,33 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding SelectedPort.Name}"
+                           Grid.ColumnSpan="2"
                            FontSize="20"
                            FontStyle="Oblique"
                            HorizontalAlignment="Center"/>
+                
+                <!--Buy Grid-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Buys:"
+                               HorizontalAlignment="Center"/>
+                    <DataGrid Grid.Row="1"
+                              >
+                        
+                    </DataGrid>
+                </Grid>
+
+                <!--Sell Grid-->
             </Grid>
         </Border>
         
