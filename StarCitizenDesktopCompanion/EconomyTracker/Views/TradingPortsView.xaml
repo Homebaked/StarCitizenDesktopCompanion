@@ -43,13 +43,34 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Buys:"
                                HorizontalAlignment="Center"/>
                     <DataGrid Grid.Row="1"
-                              >
-                        
+                              ItemsSource="{Binding SelectedBuyPrices}"
+                              AutoGenerateColumns="False">
+                        <DataGridTextColumn Header="Commodity" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Low Price" Binding="{Binding LowPrice}"/>
+                        <DataGridTextColumn Header="Avg Price" Binding="{Binding AvgPrice}"/>
+                        <DataGridTextColumn Header="High Price" Binding="{Binding HighPrice}"/>
                     </DataGrid>
+                    <!--Add Price-->
+                    <Border Margin="5" Grid.Row="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Commodity:"/>
+                            <ComboBox 
+                        </Grid>
+                    </Border>
                 </Grid>
 
                 <!--Sell Grid-->

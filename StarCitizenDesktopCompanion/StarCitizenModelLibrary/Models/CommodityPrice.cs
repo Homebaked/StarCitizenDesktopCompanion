@@ -11,6 +11,51 @@ namespace StarCitizenModelLibrary.Models
     {
         public Commodity Commodity { get; }
         public PriceType Type { get; }
+        
+        public double AvgPrice
+        {
+            get
+            {
+                double total = 0;
+                double n = 0;
+                foreach(PricePoint point in this.PriceHistory)
+                {
+                    total += point.Price;
+                    n++;
+                }
+                return (total / n);
+            }
+        }
+        public double HighPrice
+        {
+            get
+            {
+                double high = 0;
+                foreach(PricePoint point in this.PriceHistory)
+                {
+                    if (point.Price > high)
+                    {
+                        high = point.Price;
+                    }
+                }
+                return high;
+            }
+        }
+        public double LowPrice
+        {
+            get
+            {
+                double low = -1;
+                foreach(PricePoint point in this.PriceHistory)
+                {
+                    if (point.Price < low || low == -1)
+                    {
+                        low = point.Price;
+                    }
+                }
+                return low;
+            }
+        }
 
         public RelationshipCollection<PricePoint> PriceHistory { get; }
 

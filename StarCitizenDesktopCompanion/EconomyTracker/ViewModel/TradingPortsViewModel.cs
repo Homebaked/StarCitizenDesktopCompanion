@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using StarCitizenModelLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace EconomyTracker.ViewModel
     public class TradingPortsViewModel : ViewModelBase
     {
         private TradingPort _selectedPort;
-        private ReadOnlyObservableCollection<CommodityPrice> _selectedBuyPrices;
-        private ReadOnlyObservableCollection<CommodityPrice> _selectedSellPrices;
+        private ReadOnlyObservableSubset<CommodityPrice> _selectedBuyPrices;
+        private ReadOnlyObservableSubset<CommodityPrice> _selectedSellPrices;
         
         public ReadOnlyObservableCollection<TradingPort> Ports { get; }
         public TradingPort SelectedPort
@@ -25,43 +26,23 @@ namespace EconomyTracker.ViewModel
                 {
                     _selectedPort = value;
                     RaisePropertyChanged("SelectedPort");
+                    selectedPortChanged(value);
                 }
             }
         }
-        public ReadOnlyObservableCollection<CommodityPrice> SelectedBuyPrices
-        {
-            get { return _selectedBuyPrices; }
-            private set
-            {
-                if (_selectedBuyPrices != value)
-                {
-                    _selectedBuyPrices = value;
-                    RaisePropertyChanged("SelectedBuyPrices");
-                }
-            }
-        }
-        public ReadOnlyObservableCollection<CommodityPrice> SelectedSellPrices
-        {
-            get { return _selectedBuyPrices; }
-            private set
-            {
-                if (_selectedSellPrices != value)
-                {
-                    _selectedSellPrices = value;
-                    RaisePropertyChanged("SelectedSellPrices");
-                }
-            }
-        }
+
+        public CommodityPricesViewModel BuyPrices { get; } = new CommodityPricesViewModel(PriceType.Buy);
+        public CommodityPricesViewModel SellPrices { get; } = new CommodityPricesViewModel(PriceType.Sell);
 
         public TradingPortsViewModel(SCDataManager dataManager)
         {
             this.Ports = new ReadOnlyObservableCollection<TradingPort>(dataManager.TradingPorts);
-            this.SelectedPort.PropertyChanged += selectedPortPropertyChanged;
         }
 
-        private void selectedPortPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void selectedPortChanged(TradingPort port)
         {
-            throw new NotImplementedException();
+            this.BuyPrices.Port = port;
+            this.SellPrices.Port = port;
         }
     }
 }
