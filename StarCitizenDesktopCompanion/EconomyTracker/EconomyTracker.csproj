@@ -88,6 +88,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Grids\CommodityPriceDataGrid.xaml.cs">
+      <DependentUpon>CommodityPriceDataGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\CommodityPricesViewModel.cs" />
     <Compile Include="ViewModel\SCMainViewModel.cs" />
     <Compile Include="ViewModel\TradingPortsViewModel.cs" />
@@ -98,6 +101,10 @@
     <Compile Include="Views\TradingPortsView.xaml.cs">
       <DependentUpon>TradingPortsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Grids\CommodityPriceDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -18,7 +18,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.Resources>
             <Style TargetType="Border">
@@ -88,10 +87,7 @@
         <views:SCScreenView Grid.Row="2"
                             MainViewModel="{Binding}"
                             Grid.Column="1"/>
-        <views:SCScreenView Grid.Row="2" 
-                            MainViewModel="{Binding}"
-                            Grid.Column="2"/>
-        
+
         <!--Status Bar-->
         <Grid Grid.Row="3" Grid.ColumnSpan="3">
             <TextBlock Text="Version #"/>
