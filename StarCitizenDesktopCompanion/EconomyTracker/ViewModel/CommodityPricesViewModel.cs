@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using StarCitizenModelLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,11 +74,13 @@ namespace EconomyTracker.ViewModel
         public CommodityPricesViewModel(PriceType type)
         {
             this.Type = type;
+
+            this.AddPriceCommand = new RelayCommand(addPriceExecute, canAddPrice);
         }
 
         private void portChanged(TradingPort port)
         {
-            this.Prices = new ReadOnlyObservableSubset<CommodityPrice>(this.Port.Prices, (x) => { return x.Type == this.Type; });
+            this.Prices = new ReadOnlyObservableSubset<CommodityPrice>(port.Prices, (x) => { return x.Type == this.Type; });
         }
 
         private void addPriceExecute()
@@ -100,6 +103,10 @@ namespace EconomyTracker.ViewModel
 
             this.SelectedCommodity = null;
             this.NewPrice = 0;
+        }
+        private bool canAddPrice()
+        {
+            return ((this.Port != null) && (this.NewPrice > 0) && this.SelectedCommodity != null);
         }
     }
 }

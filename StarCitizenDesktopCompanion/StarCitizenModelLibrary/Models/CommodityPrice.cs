@@ -74,6 +74,9 @@ namespace StarCitizenModelLibrary.Models
         public void AddPrice(double price, DateTime dateTime)
         {
             this.PriceHistory.Add(new PricePoint(price, dateTime));
+            RaisePropertyChanged("AvgPrice");
+            RaisePropertyChanged("HighPrice");
+            RaisePropertyChanged("LowPrice");
         }
     }
 

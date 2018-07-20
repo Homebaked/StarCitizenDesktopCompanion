@@ -15,9 +15,10 @@
         <!--Trading Ports List-->
         <DataGrid ItemsSource="{Binding Ports}"
                   SelectedItem="{Binding SelectedPort}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Trading Ports" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Trading Ports" Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
         <!--Trading Port Info-->
@@ -48,27 +49,42 @@
                     <TextBlock Text="Buys:"
                                HorizontalAlignment="Center"/>
                     <DataGrid Grid.Row="1"
-                              ItemsSource="{Binding SelectedBuyPrices}"
-                              AutoGenerateColumns="False">
-                        <DataGridTextColumn Header="Commodity" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Low Price" Binding="{Binding LowPrice}"/>
-                        <DataGridTextColumn Header="Avg Price" Binding="{Binding AvgPrice}"/>
-                        <DataGridTextColumn Header="High Price" Binding="{Binding HighPrice}"/>
+                              ItemsSource="{Binding BuyPrices.Prices}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}"/>
+                            <DataGridTextColumn Header="Low Price" Binding="{Binding LowPrice}"/>
+                            <DataGridTextColumn Header="Avg Price" Binding="{Binding AvgPrice}"/>
+                            <DataGridTextColumn Header="High Price" Binding="{Binding HighPrice}"/>
+                        </DataGrid.Columns>
                     </DataGrid>
                     <!--Add Price-->
                     <Border Margin="5" Grid.Row="2">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Commodity:"/>
-                            <ComboBox 
+                            <ComboBox ItemsSource="{Binding Commodities}"
+                                      SelectedItem="{Binding BuyPrices.SelectedCommodity}"
+                                      DisplayMemberPath="Name"
+                                      Grid.Column="1"/>
+                            <TextBlock Text="Price:"
+                                       Grid.Row="1"/>
+                            <TextBox Text="{Binding BuyPrices.NewPrice, UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Row="1"
+                                     Grid.Column="1"/>
+                            <Button Content="Add Price"
+                                    Command="{Binding BuyPrices.AddPriceCommand}"
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"/>
                         </Grid>
                     </Border>
                 </Grid>

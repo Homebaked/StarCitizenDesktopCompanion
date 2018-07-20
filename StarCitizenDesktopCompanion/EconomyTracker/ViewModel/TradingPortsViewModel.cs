@@ -13,8 +13,6 @@ namespace EconomyTracker.ViewModel
     public class TradingPortsViewModel : ViewModelBase
     {
         private TradingPort _selectedPort;
-        private ReadOnlyObservableSubset<CommodityPrice> _selectedBuyPrices;
-        private ReadOnlyObservableSubset<CommodityPrice> _selectedSellPrices;
         
         public ReadOnlyObservableCollection<TradingPort> Ports { get; }
         public TradingPort SelectedPort
@@ -31,12 +29,15 @@ namespace EconomyTracker.ViewModel
             }
         }
 
+        public ReadOnlyObservableCollection<Commodity> Commodities { get; }
+
         public CommodityPricesViewModel BuyPrices { get; } = new CommodityPricesViewModel(PriceType.Buy);
         public CommodityPricesViewModel SellPrices { get; } = new CommodityPricesViewModel(PriceType.Sell);
 
         public TradingPortsViewModel(SCDataManager dataManager)
         {
             this.Ports = new ReadOnlyObservableCollection<TradingPort>(dataManager.TradingPorts);
+            this.Commodities = new ReadOnlyObservableCollection<Commodity>(dataManager.Commodities);
         }
 
         private void selectedPortChanged(TradingPort port)
