@@ -91,7 +91,6 @@
     <Compile Include="Grids\CommodityPriceDataGrid.xaml.cs">
       <DependentUpon>CommodityPriceDataGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CommodityPricesViewModel.cs" />
     <Compile Include="ViewModel\SCMainViewModel.cs" />
     <Compile Include="ViewModel\TradingPortsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

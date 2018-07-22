@@ -49,7 +49,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="Buys:"
                                HorizontalAlignment="Center"/>
-                    <grids:CommodityPriceDataGrid Prices="{Binding BuyPrices.Prices}"
+                    <grids:CommodityPriceDataGrid Prices="{Binding BuyPrices}"
                                                   Grid.Row="1"/>
                 </Grid>
 
@@ -61,7 +61,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="Sells:"
                                HorizontalAlignment="Center"/>
-                    <grids:CommodityPriceDataGrid Prices="{Binding SellPrices.Prices}"
+                    <grids:CommodityPriceDataGrid Prices="{Binding SellPrices}"
                                                   Grid.Row="1"/>
                 </Grid>
 
@@ -78,13 +78,17 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Commodity:"/>
+                        <TextBlock Text="Commodity:"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"/>
                         <ComboBox ItemsSource="{Binding Commodities}"
-                                  SelectedItem="{Binding BuyPrices.SelectedCommodity}"
+                                  SelectedItem="{Binding SelectedCommodity}"
                                   DisplayMemberPath="Name"
                                   Grid.Column="1"
                                   Margin="5"/>
                         <TextBlock Text="Price:"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
                                    Grid.Row="1"/>
                         <Grid Grid.Row="1"
                               Grid.Column="1"
@@ -93,12 +97,23 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding BuyPrices.NewPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding NewPrice, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="aUEC" Grid.Column="1"/>
                         </Grid>
+                        <TextBlock Text="Price Type:"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Grid.Row="2"/>
+                        <ComboBox ItemsSource="{Binding Types}"
+                                  SelectedItem="{Binding SelectedType}"
+                                  Grid.Column="1"
+                                  Grid.Row="2"
+                                  Margin="5"
+                                  Width="Auto"
+                                  HorizontalAlignment="Left"/>
                         <Button Content="Add Price"
-                                Command="{Binding BuyPrices.AddPriceCommand}"
-                                Grid.Row="2"
+                                Command="{Binding AddPriceCommand}"
+                                Grid.Row="3"
                                 Grid.ColumnSpan="2"
                                 Margin="5"/>
                     </Grid>
