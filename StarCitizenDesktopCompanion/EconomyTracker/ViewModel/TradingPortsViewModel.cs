@@ -17,8 +17,10 @@ namespace EconomyTracker.ViewModel
         private PriceType _selectedType;
         private double _newPrice;
 
-        private ReadOnlyObservableSubset<CommodityPrice> _buyPrices;
-        private ReadOnlyObservableSubset<CommodityPrice> _sellPrices;
+        private ReadOnlyObservableSubset<CommodityPrice> buyPrices;
+        private ReadOnlyObservableSubset<CommodityPrice> sellPrices;
+
+        private ReadOnlyObservableSubset<CommodityPrice> _prices;
         
         public ReadOnlyObservableCollection<TradingPort> Ports { get; }
         public TradingPort SelectedPort
@@ -35,27 +37,15 @@ namespace EconomyTracker.ViewModel
             }
         }
 
-        public ReadOnlyObservableSubset<CommodityPrice> BuyPrices
+        public ReadOnlyObservableSubset<CommodityPrice> Prices
         {
-            get { return _buyPrices; }
-            private set
+            get { return _prices; }
+            set
             {
-                if (_buyPrices != value)
+                if (_prices != value)
                 {
-                    _buyPrices = value;
-                    RaisePropertyChanged("BuyPrices");
-                }
-            }
-        }
-        public ReadOnlyObservableSubset<CommodityPrice> SellPrices
-        {
-            get { return _sellPrices; }
-            private set
-            {
-                if (_sellPrices != value)
-                {
-                    _sellPrices = value;
-                    RaisePropertyChanged("SellPrices");
+                    _prices = value;
+                    RaisePropertyChanged("Prices");
                 }
             }
         }
@@ -84,6 +74,7 @@ namespace EconomyTracker.ViewModel
                 {
                     _selectedType = value;
                     RaisePropertyChanged("SelectedType");
+                    selectedTypeChanged(value);
                 }
             }
         }
@@ -113,8 +104,24 @@ namespace EconomyTracker.ViewModel
 
         private void selectedPortChanged(TradingPort port)
         {
-            this.BuyPrices = new ReadOnlyObservableSubset<CommodityPrice>(port.Prices, price => price.Type == PriceType.Buy);
-            this.SellPrices = new ReadOnlyObservableSubset<CommodityPrice>(port.Prices, price => price.Type == PriceType.Sell);
+            this.buyPrices = new ReadOnlyObservableSubset<CommodityPrice>(port.Prices, price => price.Type == PriceType.Buy);
+            this.sellPrices = new ReadOnlyObservableSubset<CommodityPrice>(port.Prices, price => price.Type == PriceType.Sell);
+            selectedTypeChanged(this.SelectedType);
+        }
+        private void selectedTypeChanged(PriceType type)
+        {
+            if (type == PriceType.Buy)
+            {
+                this.Prices = buyPrices;
+            }
+            else if (type == PriceType.Sell)
+            {
+                this.Prices = sellPrices;
+            }
+            else
+            {
+                Console.WriteLine("PriceType unrecognized in TradingPortsViewModel. Type: {0}", type);
+            }
         }
 
         private void addPriceExecute()
