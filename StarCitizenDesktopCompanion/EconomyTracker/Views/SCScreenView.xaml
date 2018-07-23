@@ -20,10 +20,10 @@
             <TabItem Header="Trading Ports">
                 <local:TradingPortsView VM="{Binding PortsVM}"/>
             </TabItem>
-            <TabItem Header="Routes">
+            <TabItem Header="Route Planner">
                 
             </TabItem>
-            <TabItem Header="Mining">
+            <TabItem Header="Mining Helper">
                 
             </TabItem>
         </TabControl>     
