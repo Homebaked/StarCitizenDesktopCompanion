@@ -132,6 +132,7 @@ namespace EconomyTracker.ViewModel
             if (matchingPrice == null)
             {
                 matchingPrice = new CommodityPrice(this.SelectedCommodity, this.SelectedType);
+                this.SelectedPort.Prices.Add(matchingPrice);
             }
 
             matchingPrice.AddPrice(this.NewPrice);

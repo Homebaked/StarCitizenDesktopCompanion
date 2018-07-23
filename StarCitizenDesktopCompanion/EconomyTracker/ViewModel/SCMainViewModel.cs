@@ -45,7 +45,7 @@ namespace EconomyTracker.ViewModel
                 }
             }
         }
-        public SCDeltaManager DeltaManager { get; }
+        public SCDeltaManager DeltaManager { get; private set; }
 
         public TradingPortsViewModel PortsVM
         {
@@ -115,6 +115,7 @@ namespace EconomyTracker.ViewModel
         private void loadExecute()
         {
             this.DataManager = StarCitizenDB.Load(filePath);
+            this.DeltaManager = new SCDeltaManager(this.DataManager);
             this.PortsVM = new TradingPortsViewModel(this.DataManager);
         }
 
