@@ -17,8 +17,14 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="TradingPorts">
+            <TabItem Header="Trading Ports">
                 <local:TradingPortsView VM="{Binding PortsVM}"/>
+            </TabItem>
+            <TabItem Header="Routes">
+                
+            </TabItem>
+            <TabItem Header="Mining">
+                
             </TabItem>
         </TabControl>     
     </Grid>
