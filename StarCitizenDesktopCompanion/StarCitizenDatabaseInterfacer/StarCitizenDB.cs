@@ -219,7 +219,7 @@ namespace StarCitizenDatabaseInterfacer
                 {
                     Guid commodityPriceGuid = new Guid(row.ItemArray[0].ToString());
                     double priceDouble = (double)row.ItemArray[1];
-                    DateTime dateTime = new DateTime((long)row.ItemArray[2]);
+                    DateTime dateTime = new DateTime(Convert.ToInt64(row.ItemArray[2]));
 
                     CommodityPrice commodityPrice = priceDict[commodityPriceGuid];
                     commodityPrice.AddPrice(priceDouble, dateTime);
@@ -265,6 +265,7 @@ namespace StarCitizenDatabaseInterfacer
             pointFieldValues.Add("CommodityPriceGuid", price.Guid.ToString());
             pointFieldValues.Add("Price", point.Price.ToString());
             pointFieldValues.Add("DateTime", point.DateTime.Ticks.ToString());
+            db.AddValueToTable("PricePoint", pointFieldValues);
         }
 
         private static void addTradingPortCommodityPrice(SQLiteDB db, TradingPort port, CommodityPrice price)
